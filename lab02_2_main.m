@@ -84,11 +84,11 @@ ecgf5 = filter(bp,ap,ecg2);
 t2 = (0:length(ecgf5)-1)/fs;
 figure(5);
 subplot(2, 1, 1); plot (t2, ecg); 
-title('Нефільтрований сигнал');
+title('Нефільтрований сигнал ЕКГ');
 xlim([0 1]);
 ylabel('Амплітуда');
 subplot(2, 1, 2); plot (t2, ecgf5);
-title('Відфільтрований сигнал');
+title('Відфільтрований сигнал ЕКГ');
 xlim([0 1]);
 xlabel('Відліки'); ylabel('Амплітуда');
 
@@ -130,3 +130,20 @@ disp(xx);
 figure(8);
 yy = zplane(br);
 title('Карта нулів та полюсів режекторного фільтру');
+
+%=== Завдання #3.2 ===
+% Фільтрація сигналу ЕКГ (файл ecg2х60.dat) режекторним фільтром
+fs = 250;
+ecg = load('ecg2x60.dat'); % сигнал ЕКГ
+ecgd = detrend(ecg);
+ecgf = filter(br, ar, ecgd);
+t3 = (0:length(ecgf)-1)/fs;  
+figure(9);
+subplot(2, 1, 1); plot(t3, ecg), grid on;
+title('Невідфільтрований сигнал ЕКГ');
+xlim([0 1]);
+ylabel('Амплітуда');
+subplot(2, 1, 2); plot(t3, ecgf); grid on;
+title('Відфільтрований сигнал ЕКГ');
+xlim([0 1]);
+ylabel('Амплітуда'); xlabel('Відліки');
