@@ -30,7 +30,7 @@ title('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
 %=== Завдання #1.2 ===
 % Обчислення нулів фільтру
 disp('Нулі фільтра Хеннінга');
-x = roots (b);
+x = roots(b);
 disp(x);
 
 %=== Завдання #1.3 ===
@@ -39,17 +39,16 @@ fs = 1000;
 ecg1 = load('ecg117.dat'); % сигнал ЕКГ
 ecg = detrend(ecg1);  
 ecgf = filter(b, a, ecg);
-t = (0:length(ecgf)-1)/fs;
+t1 = (0:length(ecgf)-1)/fs;
 figure(2);
-subplot(2, 1, 1); plot(t, ecg1), grid on;
+subplot(2, 1, 1); plot(t1, ecg1), grid on;
 title('Нефільтрований сигнал ЕКГ');
 xlim([0 1]);
 ylabel('Амплітуда');
-subplot (2, 1, 2); plot (t, ecgf); grid on;
+subplot (2, 1, 2); plot (t1, ecgf); grid on;
 title('Відфільтрований сигнал ЕКГ');
 xlim([0 1]);
-ylabel('Амплітуда');
-xlabel('Відліки');
+ylabel('Амплітуда'); xlabel('Відліки');
 
 %=== Завдання #2.1 ===
 %Реалізація фільтру поліноміального згладжування
@@ -75,3 +74,20 @@ disp(y);
 figure(4);
 z = zplane(bp);
 title('Карта нулів та полюсів фільтру');
+
+%=== Завдання #2.2 ===
+%Фільтрація ЕКГ файл ecg117.dat з використанням фільтру 
+%поліноміального згладжування
+ecg = load('ecg117.dat');
+ecg2 = detrend(ecg);
+ecgf5 = filter(bp,ap,ecg2);
+t2 = (0:length(ecgf5)-1)/fs;
+figure(5);
+subplot(2, 1, 1); plot (t2, ecg); 
+title('Нефільтрований сигнал');
+xlim([0 1]);
+ylabel('Амплітуда');
+subplot(2, 1, 2); plot (t2, ecgf5);
+title('Відфільтрований сигнал');
+xlim([0 1]);
+xlabel('Відліки'); ylabel('Амплітуда');
