@@ -147,3 +147,33 @@ subplot(2, 1, 2); plot(t3, ecgf); grid on;
 title('Відфільтрований сигнал ЕКГ');
 xlim([0 1]);
 ylabel('Амплітуда'); xlabel('Відліки');
+
+%=== Завдання #4.1 ===
+% Дослідження властивостей диференціаторів
+% N = 1
+fs = 1000; 
+bd1 = [1,-1]; % коефіцієнти різницевого рівняння 
+ad1 = 1;
+n = 512; % кількість точок, що розраховуються
+figure(10);
+[h,f] = freqz(bd1,ad1,n,fs);
+mag = abs(h);
+phase = angle(h)*180/pi;
+subplot(2, 1, 1); plot(f/(2*pi)*fs, mag), grid on;
+title('АЧХ диференціатору при N=1'); ylabel('Підсилення');
+subplot(2, 1, 2); plot(f/(2*pi)*fs,unwrap(phase)), grid on;
+title('ФЧХ диференціатору при N=1'); xlabel('Частота'); ylabel('Фаза');
+
+% N = 2
+fs = 1000; 
+bd2 = ([1,-1])/2; % коефіцієнти різницевого рівняння 
+ad2 = 1;
+n = 512; % кількість точок, що розраховуються
+figure(11);
+[h,f] = freqz(bd2, ad2, n, fs);
+mag = abs(h);
+phase = angle(h)*180/pi;
+subplot(2, 1, 1); plot(f/(2*pi)*fs, mag), grid on;
+title('АЧХ диференціатору при N=2'); ylabel('Підсилення');
+subplot(2, 1, 2); plot(f/(2*pi)*fs,unwrap(phase)), grid on;
+title('ФЧХ диференціатору при N=2'); xlabel('Частота'); ylabel('Фаза');
