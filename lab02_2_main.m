@@ -177,3 +177,25 @@ subplot(2, 1, 1); plot(f/(2*pi)*fs, mag), grid on;
 title('АЧХ диференціатору при N=2'); ylabel('Підсилення');
 subplot(2, 1, 2); plot(f/(2*pi)*fs,unwrap(phase)), grid on;
 title('ФЧХ диференціатору при N=2'); xlabel('Частота'); ylabel('Фаза');
+
+%=== Завдання #4.2 ===
+% Дослідження процесу диференціювання ЕКГ з шумом (файл ecg117.dat)
+% N = 1
+fs = 300;
+ecg = load('ecg117.dat'); % сигнал ЕКГ
+ecgd1 = filter(bd1, ad1, ecg);
+ecgdd = detrend(ecgd1);
+t4 = (0:length(ecgdd)-1)/fs;
+
+% N = 2
+ecgd2 = filter(bd2, ad2, ecg);
+t5 = (0:length(ecgdd)-1)/fs;
+figure(12);
+subplot (2, 1, 1); plot(t4, ecgd1), grid on;
+title('Сигнал з використанням диференціатору при N=1');
+xlim([0 1]);
+ylabel('Амплітуда');
+subplot (2, 1, 2); plot (t5, ecgd2); grid on;
+title('Сигнал з використанням диференціатору при N=2');
+xlim([0 1]);
+xlabel('Відліки'); ylabel('Амплітуда');
