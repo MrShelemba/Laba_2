@@ -23,12 +23,30 @@ figure(1);
 mag = abs(h);
 phase = angle(h)*180/pi;
 subplot(2, 1, 1); plot(w/(2*pi)*fs, mag), grid on;
-title ('АЧХ'); ylabel ('Підсилення');
+title('АЧХ'); ylabel('Підсилення');
 subplot(2, 1, 2); plot(w/(2*pi)*fs,unwrap(phase)), grid on;
-title ('ФЧХ'); xlabel ('Частота'); ylabel ('Фаза');
+title('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
 
 %=== Завдання #1.2 ===
 % Обчислення нулів фільтру
 disp('Нулі фільтра Хеннінга') 
 x = roots (b);
 disp(x);
+
+%=== Завдання #1.3 ===
+% Фільтрація ЕКГ, файл ecg117.dat
+fs = 1000;
+ecg1 = load('ecg117.dat'); % сигнал ЕКГ
+ecg = detrend(ecg1);  
+ecgf = filter(b, a, ecg);
+t = (0:length(ecgf)-1)/fs;
+figure(2)
+subplot(2, 1, 1); plot(t, ecg1), grid on;
+title('Нефільтрований сигнал ЕКГ');
+xlim([0 1]);
+ylabel('Амплітуда');
+subplot (2, 1, 2); plot (t, ecgf); grid on;
+title('Відфільтрований сигнал ЕКГ');
+xlim([0 1]);
+ylabel('Амплітуда');
+xlabel('Відліки');

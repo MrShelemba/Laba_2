@@ -30,4 +30,24 @@ title ('ФЧХ'); xlabel ('Частота'); ylabel ('Фаза');
 %=== Завдання #1.2 ===
 % Обчислення нулів фільтру
 disp('Нулі фільтра Хеннінга') 
-x = 
+x = roots (b);
+disp(x);
+
+%=== Завдання #1.3 ===
+% Фільтрація ЕКГ, файл ecg117.dat
+fs = 1000;
+ecg1 = load('ecg117.dat'); % сигнал ЕКГ
+ecg = detrend(ecg1);  
+ecgf = filter(b, a, ecg);
+t1 = (0:length(ecgf)-1)/fs;
+figure(2)
+subplot(2, 1, 1); plot(t1, ecg1), grid on;
+title ('Сигнал до фільтрації');
+xlim([0 1]);
+ylabel('Амплітуда');
+xlabel('Відліки');
+subplot (2, 1, 2); plot (t1, ecgf); grid on;
+title ('Сигнал після фільтрації');
+xlim([0 1]);
+ylabel('Амплітуда');
+xlabel('Відліки');
