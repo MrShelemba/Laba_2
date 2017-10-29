@@ -15,17 +15,17 @@ disp('Виконав: Шелемба П.В., група БМ-462, ННІІДС')
 %=== Завдання #1.1 ===
 % Реалізація фільтру Хеннінга, обчислення АЧХ та ФЧХ
 fs = 1000;
-b = [1 2 1]/4;       % коефіцієнти різницевого рівняння 
+b = [1 2 1]/4; % коефіцієнти різницевого рівняння 
 a = 1;
-n = 512;     % кількість точок, що розраховуються
+n = 512; % кількість точок, що розраховуються
 figure(1);
 [h,w] = freqz(b, a, n);
 mag = abs(h);
 phase = angle(h)*180/pi;
 subplot(2, 1, 1); plot(w/(2*pi)*fs, mag), grid on;
-title ('АЧХ'); ylabel ('Підсилення');
+title('АЧХ'); ylabel('Підсилення');
 subplot(2, 1, 2); plot(w/(2*pi)*fs,unwrap(phase)), grid on;
-title ('ФЧХ'); xlabel ('Частота'); ylabel ('Фаза');
+title('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
 
 %=== Завдання #1.2 ===
 % Обчислення нулів фільтру
@@ -39,15 +39,34 @@ fs = 1000;
 ecg1 = load('ecg117.dat'); % сигнал ЕКГ
 ecg = detrend(ecg1);  
 ecgf = filter(b, a, ecg);
-t1 = (0:length(ecgf)-1)/fs;
+t = (0:length(ecgf)-1)/fs;
 figure(2)
-subplot(2, 1, 1); plot(t1, ecg1), grid on;
-title ('Сигнал до фільтрації');
+subplot(2, 1, 1); plot(t, ecg1), grid on;
+title('Нефільтрований сигнал ЕКГ');
+xlim([0 1]);
+ylabel('Амплітуда');
+subplot (2, 1, 2); plot (t, ecgf); grid on;
+title('Відфільтрований сигнал ЕКГ');
 xlim([0 1]);
 ylabel('Амплітуда');
 xlabel('Відліки');
-subplot (2, 1, 2); plot (t1, ecgf); grid on;
-title ('Сигнал після фільтрації');
-xlim([0 1]);
-ylabel('Амплітуда');
-xlabel('Відліки');
+
+%=== Завдання #2.1 ===
+%Реалізація фільтру поліноміального згладжування
+fs = 1000;
+bp = [-3, 12, 17, 12, -3]/35; % коефіцієнти різницевого рівняння
+ap = 1;
+n = 5; % кількість точок, що розраховуються
+figure(3);
+[h,w] = freqz(bp, ap, n);
+mag = abs(h);
+phase = angle(h)*180/pi;
+subplot(2, 1, 1); plot(w/(2*pi)*fs, mag), grid on;
+title('АЧХ'); ylabel('Підсилення');
+subplot(2, 1, 2); plot(w/(2*pi)*fs,unwrap(phase)), grid on;
+title('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
+
+% Обчислення нулів фільтру
+disp('Нулі фільтра поліноміального згладжування') 
+x = roots (b);
+disp(x);
