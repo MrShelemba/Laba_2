@@ -23,9 +23,9 @@ figure(1);
 mag = abs(h);
 phase = angle(h)*180/pi;
 subplot(2, 1, 1); plot(w/(2*pi)*fs, mag), grid on;
-title('АЧХ'); ylabel('Підсилення');
+title('АЧХ фільтру Хеннінга'); ylabel('Підсилення');
 subplot(2, 1, 2); plot(w/(2*pi)*fs,unwrap(phase)), grid on;
-title('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
+title('ФЧХ фільтру Хеннінга'); xlabel('Частота'); ylabel('Фаза');
 
 %=== Завдання #1.2 ===
 % Обчислення нулів фільтру
@@ -61,9 +61,9 @@ figure(3);
 mag = abs(h);
 phase = angle(h)*180/pi;
 subplot(2, 1, 1); plot(w/(2*pi)*fs, mag), grid on;
-title('АЧХ'); ylabel('Підсилення');
+title('АЧХ поліноміального фільтру'); ylabel('Підсилення');
 subplot(2, 1, 2); plot(w/(2*pi)*fs,unwrap(phase)), grid on;
-title('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
+title('ФЧХ поліноміального фільтру'); xlabel('Частота'); ylabel('Фаза');
 
 % Обчислення нулів фільтру
 disp('Нулі фільтра поліноміального згладжування:');
@@ -117,9 +117,9 @@ figure(7);
 mag = abs(h);
 phase = angle(h)*180/pi;
 subplot(2, 1, 1); plot(f/(2*pi)*fs, mag), grid on;
-title('АЧХ'); ylabel('Підсилення');
+title('АЧХ режекторного фільтру'); ylabel('Підсилення');
 subplot(2, 1, 2); plot(f/(2*pi)*fs,unwrap(phase)), grid on;
-title ('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
+title ('ФЧХ режекторного фільтру'); xlabel('Частота'); ylabel('Фаза');
 
 % Обчислення нулів фільтру
 disp('Нулі режекторного фільтру:');
@@ -146,7 +146,7 @@ ylabel('Амплітуда');
 subplot(2, 1, 2); plot(t3, ecgf); grid on;
 title('Відфільтрований сигнал ЕКГ');
 xlim([0 1]);
-ylabel('Амплітуда'); xlabel('Відліки');
+xlabel('Відліки'); ylabel('Амплітуда');
 
 %=== Завдання #4.1 ===
 % Дослідження властивостей диференціаторів

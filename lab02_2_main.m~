@@ -23,13 +23,13 @@ figure(1);
 mag = abs(h);
 phase = angle(h)*180/pi;
 subplot(2, 1, 1); plot(w/(2*pi)*fs, mag), grid on;
-title('АЧХ'); ylabel('Підсилення');
+title('АЧХ фільтру Хеннінга'); ylabel('Підсилення');
 subplot(2, 1, 2); plot(w/(2*pi)*fs,unwrap(phase)), grid on;
-title('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
+title('ФЧХ фільтру Хеннінга'); xlabel('Частота'); ylabel('Фаза');
 
 %=== Завдання #1.2 ===
 % Обчислення нулів фільтру
-disp('Нулі фільтра Хеннінга');
+disp('Нулі фільтра Хеннінга:');
 x = roots(b);
 disp(x);
 
@@ -61,19 +61,19 @@ figure(3);
 mag = abs(h);
 phase = angle(h)*180/pi;
 subplot(2, 1, 1); plot(w/(2*pi)*fs, mag), grid on;
-title('АЧХ'); ylabel('Підсилення');
+title('АЧХ поліноміального фільтру'); ylabel('Підсилення');
 subplot(2, 1, 2); plot(w/(2*pi)*fs,unwrap(phase)), grid on;
-title('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
+title('ФЧХ поліноміального фільтру'); xlabel('Частота'); ylabel('Фаза');
 
 % Обчислення нулів фільтру
-disp('Нулі фільтра поліноміального згладжування');
+disp('Нулі фільтра поліноміального згладжування:');
 y = roots(bp);
 disp(y);
 
 % Карта нулів та полюсів фільтру
 figure(4);
 z = zplane(bp);
-title('Карта нулів та полюсів фільтру');
+title('Карта нулів та полюсів поліноміального фільтру');
 
 %=== Завдання #2.2 ===
 %Фільтрація ЕКГ файл ecg117.dat з використанням фільтру 
@@ -84,11 +84,11 @@ ecgf5 = filter(bp,ap,ecg2);
 t2 = (0:length(ecgf5)-1)/fs;
 figure(5);
 subplot(2, 1, 1); plot (t2, ecg); 
-title('Нефільтрований сигнал');
+title('Нефільтрований сигнал ЕКГ');
 xlim([0 1]);
 ylabel('Амплітуда');
 subplot(2, 1, 2); plot (t2, ecgf5);
-title('Відфільтрований сигнал');
+title('Відфільтрований сигнал ЕКГ');
 xlim([0 1]);
 xlabel('Відліки'); ylabel('Амплітуда');
 
@@ -113,14 +113,89 @@ ar = 1;
 n = 512; % кількість точок, що розраховуються
 fs = 200;
 [h,f] = freqz(br, ar, n, fs);
-figure(7)
+figure(7);
 mag = abs(h);
 phase = angle(h)*180/pi;
 subplot(2, 1, 1); plot(f/(2*pi)*fs, mag), grid on;
-title ('Графік АЧХ фільтру');
-xlabel ('Частота');
-ylabel ('Підсилення');
+title('АЧХ'); ylabel('Підсилення');
 subplot(2, 1, 2); plot(f/(2*pi)*fs,unwrap(phase)), grid on;
-title ('Графік ФЧХ фільтру')
-xlabel ('Частота');
-ylabel ('Фаза');
+title ('ФЧХ'); xlabel('Частота'); ylabel('Фаза');
+
+% Обчислення нулів фільтру
+disp('Нулі режекторного фільтру:');
+xx = roots(br);
+disp(xx);
+
+% Карта нулів та полюсів фільтру
+figure(8);
+yy = zplane(br);
+title('Карта нулів та полюсів режекторного фільтру');
+
+%=== Завдання #3.2 ===
+% Фільтрація сигналу ЕКГ (файл ecg2х60.dat) режекторним фільтром
+fs = 250;
+ecg = load('ecg2x60.dat'); % сигнал ЕКГ
+ecgd = detrend(ecg);
+ecgf = filter(br, ar, ecgd);
+t3 = (0:length(ecgf)-1)/fs;  
+figure(9);
+subplot(2, 1, 1); plot(t3, ecg), grid on;
+title('Невідфільтрований сигнал ЕКГ');
+xlim([0 1]);
+ylabel('Амплітуда');
+subplot(2, 1, 2); plot(t3, ecgf); grid on;
+title('Відфільтрований сигнал ЕКГ');
+xlim([0 1]);
+xlabel('Відліки'); ylabel('Амплітуда');
+
+%=== Завдання #4.1 ===
+% Дослідження властивостей диференціаторів
+% N = 1
+fs = 1000; 
+bd1 = [1,-1]; % коефіцієнти різницевого рівняння 
+ad1 = 1;
+n = 512; % кількість точок, що розраховуються
+figure(10);
+[h,f] = freqz(bd1,ad1,n,fs);
+mag = abs(h);
+phase = angle(h)*180/pi;
+subplot(2, 1, 1); plot(f/(2*pi)*fs, mag), grid on;
+title('АЧХ диференціатору при N=1'); ylabel('Підсилення');
+subplot(2, 1, 2); plot(f/(2*pi)*fs,unwrap(phase)), grid on;
+title('ФЧХ диференціатору при N=1'); xlabel('Частота'); ylabel('Фаза');
+
+% N = 2
+fs = 1000; 
+bd2 = ([1,-1])/2; % коефіцієнти різницевого рівняння 
+ad2 = 1;
+n = 512; % кількість точок, що розраховуються
+figure(11);
+[h,f] = freqz(bd2, ad2, n, fs);
+mag = abs(h);
+phase = angle(h)*180/pi;
+subplot(2, 1, 1); plot(f/(2*pi)*fs, mag), grid on;
+title('АЧХ диференціатору при N=2'); ylabel('Підсилення');
+subplot(2, 1, 2); plot(f/(2*pi)*fs,unwrap(phase)), grid on;
+title('ФЧХ диференціатору при N=2'); xlabel('Частота'); ylabel('Фаза');
+
+%=== Завдання #4.2 ===
+% Дослідження процесу диференціювання ЕКГ з шумом (файл ecg117.dat)
+% N = 1
+fs = 300;
+ecg = load('ecg117.dat'); % сигнал ЕКГ
+ecgd1 = filter(bd1, ad1, ecg);
+ecgdd = detrend(ecgd1);
+t4 = (0:length(ecgdd)-1)/fs;
+
+% N = 2
+ecgd2 = filter(bd2, ad2, ecg);
+t5 = (0:length(ecgdd)-1)/fs;
+figure(12);
+subplot (2, 1, 1); plot(t4, ecgd1), grid on;
+title('Сигнал з використанням диференціатору при N=1');
+xlim([0 1]);
+ylabel('Амплітуда');
+subplot (2, 1, 2); plot (t5, ecgd2); grid on;
+title('Сигнал з використанням диференціатору при N=2');
+xlim([0 1]);
+xlabel('Відліки'); ylabel('Амплітуда');
